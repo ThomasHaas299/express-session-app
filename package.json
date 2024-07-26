@@ -1,0 +1,21 @@
+{
+  "name": "express-session-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "Thomas Haas",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-session": "^1.18.0"
+  },
+  "devDependencies": {
+    "cookie-parser": "^1.4.6",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
+}
