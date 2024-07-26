@@ -1,13 +1,9 @@
 const express = require("express");
 const session = require("express-session");
-const {
-  root,
-  setValueInSession,
-  getValue,
-  clearSession,
-} = require("./handler");
+const routes = require("./routes");
 
 const app = express();
+
 app.use(
   session({
     secret: "your-super-secret-key",
@@ -17,9 +13,6 @@ app.use(
   })
 );
 
-app.get("/", root);
-app.get("/set/:anyValue", setValueInSession);
-app.get("/get", getValue);
-app.get("/clean", clearSession);
+app.use("/", routes);
 
 module.exports = app;
