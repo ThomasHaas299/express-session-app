@@ -14,6 +14,10 @@ app.use(
   })
 );
 
+app.get("/", (req, res) => {
+  res.send("valid endpoints are /set/:anyValue, /get, and /clean");
+});
+
 // Endpunkte
 app.get("/set/:anyValue", (req, res) => {
   req.session.value = req.params.anyValue;
