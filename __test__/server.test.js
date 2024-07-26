@@ -1,10 +1,17 @@
 const request = require("supertest");
 const app = require("../app");
+const User = require("../models/User");
 
 const testValue = "any value";
 
+jest.mock("../models/User");
+
 describe("Session Endpoints", () => {
   const agent = request.agent(app);
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   it("should set a value in the session", async () => {
     const response = await agent.get(`/set/${testValue}`);
@@ -36,5 +43,26 @@ describe("Session Endpoints", () => {
     await agent.get("/set/foo");
     const response = await agent.get("/check");
     expect(response.status).toBe(200);
+  });
+
+  it("should login successfully with correct credentials", async () => {
+    User.findOne.mockResolvedValue({
+      username: "testUser",
+      password: "testPass",
+    });
+    const response = await agent
+      .post("/login")
+      .send({ username: "testUser", password: "testPass" });
+    expect(response.text).toBe("Login successful");
+    expect(response.status).toBe(200);
+  });
+
+  it("should fail login with incorrect credentials", async () => {
+    User.findOne.mockResolvedValue(null);
+    const response = await agent
+      .post("/login")
+      .send({ username: "testUser", password: "wrongPass" });
+    expect(response.text).toBe("Invalid username or password");
+    expect(response.status).toBe(401);
   });
 });

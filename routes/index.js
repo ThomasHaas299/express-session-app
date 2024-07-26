@@ -9,5 +9,6 @@ router.get("/set/:anyValue", handler.setValueInSession);
 router.get("/get", handler.getValue);
 router.get("/clean", handler.clearSession);
 router.get("/check", checkSessionValue, handler.reportValidSession);
+router.post("/login", handler.login);
 
 module.exports = router;

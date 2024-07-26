@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "NODE_ENV=test jest",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
@@ -12,11 +12,15 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "express-session": "^1.18.0"
+    "express-session": "^1.18.0",
+    "mongoose": "^8.5.1"
   },
   "devDependencies": {
     "jest": "^29.7.0",
+    "jest-mock": "^29.7.0",
     "nodemon": "^3.1.4",
     "supertest": "^7.0.0"
   }
