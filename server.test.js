@@ -1,40 +1,10 @@
 const request = require("supertest");
-const express = require("express");
-const session = require("express-session");
-const cookieParser = require("cookie-parser");
+// const cookieParser = require("cookie-parser");
+const app = require("./app");
 
-// Express-App Setup für Tests
-const app = express();
-app.use(cookieParser());
-app.use(
-  session({
-    secret: "test-secret",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false },
-  })
-);
+//app.use(cookieParser());
 
-app.get("/set/:anyValue", (req, res) => {
-  req.session.value = req.params.anyValue;
-  res.send(`Value set to ${req.params.anyValue}`);
-});
-
-app.get("/get", (req, res) => {
-  const value = req.session.value;
-  res.send(`Stored value is ${value}`);
-});
-
-app.get("/clean", (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.status(500).send("Could not clear session");
-    }
-    res.send("Session cleared");
-  });
-});
-
-const testValue = "any great value";
+const testValue = "any value";
 
 describe("Session Endpoints", () => {
   const agent = request.agent(app);
@@ -45,7 +15,7 @@ describe("Session Endpoints", () => {
   });
 
   it("should get the stored value from the session", async () => {
-    // await agent.get(`/set/${testValue}`);
+    //await agent.get(`/set/${testValue}`);
     const response = await agent.get("/get");
     expect(response.text).toBe(`Stored value is ${testValue}`);
   });
