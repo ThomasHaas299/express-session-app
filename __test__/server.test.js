@@ -1,8 +1,5 @@
 const request = require("supertest");
-// const cookieParser = require("cookie-parser");
-const app = require("./app");
-
-//app.use(cookieParser());
+const app = require("../app");
 
 const testValue = "any value";
 
