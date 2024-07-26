@@ -1,5 +1,11 @@
 const express = require("express");
 const session = require("express-session");
+const {
+  root,
+  setValueInSession,
+  getValue,
+  clearSession,
+} = require("./handler");
 
 const app = express();
 app.use(
@@ -11,27 +17,9 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.send("valid endpoints are /set/:anyValue, /get, and /clean");
-});
-
-app.get("/set/:anyValue", (req, res) => {
-  req.session.value = req.params.anyValue;
-  res.send(`Value set to ${req.params.anyValue}`);
-});
-
-app.get("/get", (req, res) => {
-  const value = req.session.value;
-  res.send(`Stored value is ${value}`);
-});
-
-app.get("/clean", (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.status(500).send("Could not clear session");
-    }
-    res.send("Session cleared");
-  });
-});
+app.get("/", root);
+app.get("/set/:anyValue", setValueInSession);
+app.get("/get", getValue);
+app.get("/clean", clearSession);
 
 module.exports = app;
