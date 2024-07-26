@@ -12,7 +12,8 @@ describe("Session Endpoints", () => {
   });
 
   it("should get the stored value from the session", async () => {
-    //await agent.get(`/set/${testValue}`);
+    // hint: the following line is only needed if the previous test is not run
+    await agent.get(`/set/${testValue}`);
     const response = await agent.get("/get");
     expect(response.text).toBe(`Stored value is ${testValue}`);
   });
@@ -23,5 +24,17 @@ describe("Session Endpoints", () => {
     expect(clearResponse.text).toBe("Session cleared");
     const getResponse = await agent.get("/get");
     expect(getResponse.text).toBe("Stored value is undefined");
+  });
+
+  it('should return 401 if session value is not "foo"', async () => {
+    await agent.get("/set/bar");
+    const response = await agent.get("/check");
+    expect(response.status).toBe(401);
+  });
+
+  it('should return 200 if session value is "foo"', async () => {
+    await agent.get("/set/foo");
+    const response = await agent.get("/check");
+    expect(response.status).toBe(200);
   });
 });

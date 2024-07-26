@@ -1,7 +1,7 @@
 /* handler/index.js */
 
 const root = (req, res) => {
-  res.send("valid endpoints are /set/:anyValue, /get, and /clean");
+  res.send("valid endpoints are /set/:anyValue, /get, /clean, /check");
 };
 
 const setValueInSession = (req, res) => {
@@ -23,9 +23,14 @@ const clearSession = (req, res) => {
   });
 };
 
+const reportValidSession = (req, res) => {
+  res.send("Session value is valid");
+};
+
 module.exports = {
   root,
   setValueInSession,
   getValue,
   clearSession,
+  reportValidSession,
 };
