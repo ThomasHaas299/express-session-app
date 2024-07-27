@@ -6,7 +6,7 @@ const testValue = "any value";
 
 jest.mock("../models/User");
 
-describe("Session Endpoints", () => {
+describe("Routes", () => {
   const agent = request.agent(app);
 
   beforeEach(() => {
@@ -64,5 +64,11 @@ describe("Session Endpoints", () => {
       .send({ username: "testUser", password: "wrongPass" });
     expect(response.text).toBe("Invalid username or password");
     expect(response.status).toBe(401);
+  });
+
+  it("should return the login form", async () => {
+    const response = await agent.get("/login");
+    expect(response.status).toBe(200);
+    expect(response.text).toContain("loginForm");
   });
 });

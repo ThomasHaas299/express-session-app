@@ -2,9 +2,10 @@
 
 const { default: mongoose } = require("mongoose");
 const User = require("../models/User");
+const path = require("path");
 
 const root = (req, res) => {
-  res.send("valid endpoints are /set/:anyValue, /get, /clean, /check");
+  res.send("valid endpoints are /set/:anyValue, /get, /clean, /check, /login");
 };
 
 const setValueInSession = (req, res) => {
@@ -53,6 +54,11 @@ const login = async (req, res) => {
   }
 };
 
+const loginForm = (req, res) => {
+  // load assets/loginForm.html and send it as response
+  res.sendFile(path.resolve(__dirname, "../assets/loginForm.html"));
+};
+
 module.exports = {
   root,
   setValueInSession,
@@ -60,4 +66,5 @@ module.exports = {
   clearSession,
   reportValidSession,
   login,
+  loginForm,
 };
